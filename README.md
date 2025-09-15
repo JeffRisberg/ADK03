@@ -27,7 +27,7 @@ adk web
 Then run the app at command line with:
 
 ```bash
-adk run agent
+adk run app
 ```
 
 

@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Shows how to call all the sub-agents in a loop iteratively. Run this with "adk run" or "adk web"
+# Shows how to call all the sub-agents using the LLM's reasoning ability. Run this with "adk run" or "adk web"
 
-from google.adk.agents import LlmAgent, LoopAgent
+from google.adk.agents import LlmAgent
 from google.adk.tools import google_search
+from google.adk.tools.agent_tool import AgentTool
 
 from .util import load_instruction_from_file
 
@@ -42,17 +43,23 @@ visualizer_agent = LlmAgent(
 formatter_agent = LlmAgent(
     name="ConceptFormatter",
     model="gemini-2.0-flash-001",
-    instruction="""Combine the script from state['generated_script'] and the visual concepts from state['visual_concepts'] into the final Markdown format requested previously (Hook, Script & Visuals table, Visual Notes, CTA).""",
+    instruction="""Combine the script from state['generated_script'] and the visual concepts from state['visual_concepts'] into the final outline format requested previously (Hook, Script & Visuals table, Visual Notes, CTA).""",
     description="Formats the final Short concept.",
     output_key="final_short_concept",
 )
 
 
-# --- Loop Agent Workflow ---
-youtube_shorts_agent = LoopAgent(
+# --- Llm Agent Workflow ---
+youtube_shorts_agent = LlmAgent(
     name="youtube_shorts_agent",
-    max_iterations=3,
-    sub_agents=[scriptwriter_agent, visualizer_agent, formatter_agent],
+    model="gemini-2.0-flash-001",
+    instruction=load_instruction_from_file("shorts_agent_instruction.txt"),
+    description="You are an agent that can write scripts, visuals and format youtube short videos. You have subagents that can do this",
+    tools=[
+        AgentTool(scriptwriter_agent),
+        AgentTool(visualizer_agent),
+        AgentTool(formatter_agent),
+    ],
 )
 
 # --- Root Agent for the Runner ---
