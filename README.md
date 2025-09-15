@@ -30,6 +30,12 @@ Then run the app at command line with:
 adk run app
 ```
 
+Then run programatically
+
+```bash
+python app/loop_agent_runner.py
+```
+
 
 # Close with deactivation of venv
 
