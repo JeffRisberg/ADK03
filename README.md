@@ -36,6 +36,13 @@ Then run programatically
 python app/loop_agent_runner.py
 ```
 
+Example queries:
+
+```
+Write me a script on how to build ai agents
+Can you suggest a follow-up video?
+Can you write a script for teaching react coding to web developers?
+```
 
 # Close with deactivation of venv
 

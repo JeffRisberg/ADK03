@@ -48,7 +48,6 @@ formatter_agent = LlmAgent(
     output_key="final_short_concept",
 )
 
-
 # --- Llm Agent Workflow ---
 youtube_shorts_agent = LlmAgent(
     name="youtube_shorts_agent",
